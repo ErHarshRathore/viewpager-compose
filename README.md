@@ -19,7 +19,7 @@ allprojects {
 <b>Step 2: </b> Add the dependency
 ```gradle
 dependencies {
-	implementation 'com.github.ErHarshRathore:Compose-ViewPager:1.0.0-beta08'
+	implementation 'com.github.ErHarshRathore:viewpager-compose:1.0.0-beta08'
 }
 ```
 <h3>Example :</h3>
