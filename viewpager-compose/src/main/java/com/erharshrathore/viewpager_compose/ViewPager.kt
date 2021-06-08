@@ -65,7 +65,6 @@ class ViewPagerScope(private val viewPagerChildren: MutableList<ViewPagerChild>)
     }
 }
 
-@JvmName("ViewPager")
 // ---------------- composable fun ViewPager ----------------
 /**
  * ViewPager is a [Composable] function that is able to inflate a Android [ViewPager2] view within
