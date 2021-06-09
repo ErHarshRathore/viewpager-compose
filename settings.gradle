@@ -6,5 +6,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ComposeViewpagerExample"
-include ':app'
 include ':viewpager-compose'
