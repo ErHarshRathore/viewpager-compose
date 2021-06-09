@@ -1,35 +1,106 @@
-# android-example
+# Compose-ViewPager <img src="https://jitpack.io/v/ErHarshRathore/viewpager-compose.svg"/>
 
-[![Release](https://jitpack.io/v/jitpack/android-example.svg)](https://jitpack.io/#jitpack/android-example)
+<h3>
+	ViewPager is a Composable function that is able to inflate a Android ViewPager2 view in any Composable Scope.
+</h3>
+To get a Git project into your build:<br><br>
 
-Example Android library project that works with jitpack.io.
+<b>Step 1: </b> Add the JitPack repository to your build file
 
-See this [Tutorial](https://medium.com/@ome450901/publish-an-android-library-by-jitpack-a0342684cbd0) on how to publish an Android Library with JitPack.
-
-For more details check out the [documentation](https://github.com/jitpack/jitpack.io/blob/master/ANDROID.md)
-
-https://jitpack.io/#jitpack/android-example
-
-Add it to your build.gradle with:
 ```gradle
 allprojects {
-    repositories {
-        maven { url "https://jitpack.io" }
-    }
+	repositories {
+  		...
+		maven { url 'https://jitpack.io' }
+  	}
 }
 ```
-and:
 
+<b>Step 2: </b> Add the dependency
 ```gradle
 dependencies {
-    compile 'com.github.jitpack:android-example:{latest version}'
+	implementation 'com.github.ErHarshRathore:viewpager-compose:1.0.0-beta08'
 }
 ```
+# Example :
 
-## Multiple build variants
+```kotlin
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 
-If your library uses multiple flavours then see this example:
-https://github.com/jitpack-io/android-jitpack-library-example
+@Composable
+fun ViewPagerScreen(
+    modifier: Modifier = Modifier
+) {
+    val imageIdList = remember{
+        listOf(
+            R.drawable.image_01,
+            R.drawable.image_02,
+            R.drawable.image_03,
+            R.drawable.image_04,
+            R.drawable.image_05,
+            R.drawable.image_06,
+            R.drawable.image_07,
+            R.drawable.image_08,
+            R.drawable.image_09,
+            R.drawable.image_10,
+            R.drawable.image_11,
+            R.drawable.image_12,
+        )
+    }
+    ViewPager(modifier = modifier) {
+        repeat(imageIdList.size) { index ->
+	    //Will add 12 Screens in ViewPager
+	    ViewPagerChild { 
+		MyContent(imageId = imageIdList[index])
+	    }
+	}
+	
+	//Adding 13th child(screen) to viewpager without looping.
+        ViewPagerChild { 
+	    Box(
+                modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ){
+                Text(text = "Hello World", style = MaterialTheme.typography.h2)
+            }
+	}
+	
+	
+	// ---------------- OPTIONAL THINGS ----------------
+	//You can use a ViewPager2 object to be able to receive callbacks by adding some listeners
+	//or can attach it with some TabLayout like things.
+	//For very own custom ViewPager in Composable scope user can override its adapter and other
+	//properties as well.
+	//TODO("Do something view ViewPager2 Object")
+	androidViewPager2.setCurrentItem(10, true)
+	//...
+	//...
+    }
+}
+
+@Composable
+fun MyContent(
+    modifier: Modifier = Modifier,
+    imageId: Int
+) {
+    Image(
+        modifier = modifier,
+        painter = painterResource(id = imageId),
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds
+    )
+}
+```
 
 ## Adding the maven plugin
 
@@ -43,13 +114,3 @@ After these changes you should be able to run:
     ./gradlew install
     
 from the root of your project. If install works and you have added a GitHub release it should work on jitpack.io
-
-## Adding a sample app 
-
-If you add a sample app to the same repo then your app needs to have a dependency on the library. To do this in your app/build.gradle add:
-
-```gradle
-    dependencies {
-        compile project(':library')
-    }
-```
