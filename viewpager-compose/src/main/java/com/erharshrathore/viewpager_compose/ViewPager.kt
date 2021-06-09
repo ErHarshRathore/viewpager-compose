@@ -20,7 +20,6 @@ package com.erharshrathore.viewpager_compose
 
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.viewinterop.AndroidView
@@ -35,7 +34,7 @@ import com.erharshrathore.viewpager_compose.ViewPagerScope.ViewPagerChild
  *
  * @param viewPagerChildren a `@NonNull` List of [ViewPagerChild] object/Composable.
  */
-class ViewPagerScope(private val viewPagerChildren: MutableList<ViewPagerChild>) {
+class ViewPagerScope(private val viewPagerChildren: MutableList<ViewPagerScope.ViewPagerChild>) {
     // ---------------- attribute androidViewPager2 ----------------
     /**
      * androidViewPager2 Provides the current object of Android ViewPager2 which we are using in
@@ -77,14 +76,15 @@ class ViewPagerScope(private val viewPagerChildren: MutableList<ViewPagerChild>)
  *
  * @return [Unit]
  */
+
 @Composable
 fun ViewPager(
     modifier: Modifier = Modifier,
     verticalOrientation: Boolean = false,
     content: ViewPagerScope.() -> Unit = {}
 ) {
-    val viewPagerChildren = remember{ mutableListOf<ViewPagerScope.ViewPagerChild>() }
-    val viewPagerScope = remember { ViewPagerScope(viewPagerChildren) }
+    val viewPagerChildren = mutableListOf<ViewPagerScope.ViewPagerChild>()
+    val viewPagerScope = ViewPagerScope(viewPagerChildren)
 
     class ComposeViewHolder(val composeView: ComposeView): RecyclerView.ViewHolder(composeView)
     val adapter = object: RecyclerView.Adapter<ComposeViewHolder>() {

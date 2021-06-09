@@ -39,8 +39,7 @@ import androidx.compose.ui.res.painterResource
 
 @Composable
 fun ViewPagerScreen(
-    modifier: Modifier = Modifier,
-    navController: NavHostController
+    modifier: Modifier = Modifier
 ) {
     val imageIdList = remember{
         listOf(
@@ -62,7 +61,7 @@ fun ViewPagerScreen(
         repeat(imageIdList.size) { index ->
 	    //Will add 12 Screens in ViewPager
 	    ViewPagerChild { 
-		MyContent(imageId = imageIdList[it])
+		MyContent(imageId = imageIdList[index])
 	    }
 	}
 	
